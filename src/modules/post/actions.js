@@ -25,6 +25,30 @@ const fetchPosts = () => dispatch => {
     .catch(error => dispatch(fetchPostsFailure(error)))
 }
 
+const fetchPostRequest = () => ({
+  type: constanst.FETCH_POST_REQUEST
+})
+
+const fetchPostSuccess = post => ({
+  type: constanst.FETCH_POST_SUCCESS,
+  data: post,
+  receivedAt: Date.now()
+})
+
+const fetchPostFailure = error => ({
+  type: constanst.FETCH_POST_FAILURE,
+  error
+})
+
+const fetchPost = postId => dispatch => {
+  dispatch(fetchPostRequest())
+
+  return BaseApi.getPost(postId)
+    .then(post => dispatch(fetchPostSuccess(post)))
+    .catch(error => dispatch(fetchPostFailure(error)))
+}
+
 export default {
-  fetchPosts
+  fetchPosts,
+  fetchPost
 }

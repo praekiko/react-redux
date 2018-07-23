@@ -12,6 +12,12 @@ class ChaofaApi {
       ep: '/posts'
     })
   }
+
+  getPost(id) {
+    return this.apiManager.fetch({
+      ep: `/posts/${id}`
+    })
+  }
 }
 
 export default new ChaofaApi()

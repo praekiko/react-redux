@@ -1,23 +1,31 @@
 import React, { PureComponent } from 'react'
-import { Jumbotron, Container } from 'reactstrap'
+import { Jumbotron, Container, Button } from 'reactstrap'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import RootAction from './actions'
+import PostAction from 'modules/post/actions'
 
-class RootPage extends PureComponent {
+class PostsPage extends PureComponent {
   componentDidMount() {
     this.props.fetchPosts()
   }
 
   render() {
     const { posts } = this.props
+
     return (
       <Jumbotron fluid>
         <Container fluid>
           {posts.isFetching ? (
-            <div>Loading...</div>
+            <p>Loading...</p>
           ) : (
-            posts.data.map(post => <p key={post.id}>{post.title}</p>)
+            posts.data.map(post => (
+              <div key={post.id}>
+                <Link to={`/posts/${post.id}`}>
+                  <Button color="secondary">{post.title}</Button>
+                </Link>
+              </div>
+            ))
           )}
         </Container>
       </Jumbotron>
@@ -28,10 +36,10 @@ class RootPage extends PureComponent {
 const mapStateToProps = ({ posts }) => ({ posts })
 
 const mapDispatchToProps = {
-  fetchPosts: RootAction.fetchPosts
+  fetchPosts: PostAction.fetchPosts
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RootPage)
+)(PostsPage)

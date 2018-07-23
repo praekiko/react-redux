@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
 import { configureStore } from 'common/store/configureStore'
-import RootPage from 'modules/root/RootPage'
+import RootPage from 'modules/root/pages/RootPage'
 
 import registerServiceWorker from './registerServiceWorker'
 
