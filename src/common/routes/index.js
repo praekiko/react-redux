@@ -1,8 +1,9 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import PostsPage from 'modules/post/pages/PostsPage'
-import PostPage from 'modules/post/pages/PostPage'
+import postRoutes from 'modules/post/routes'
+
+const combinedRoutes = [...postRoutes]
 
 const Router = () => (
   <Switch>
@@ -13,8 +14,10 @@ const Router = () => (
         return <h1>Home</h1>
       }}
     />
-    <Route path="/posts/:id" component={PostPage} />
-    <Route path="/posts" component={PostsPage} />
+
+    {combinedRoutes.map(({ path, component }) => (
+      <Route key={path} path={path} component={component} />
+    ))}
 
     <Route
       render={() => {

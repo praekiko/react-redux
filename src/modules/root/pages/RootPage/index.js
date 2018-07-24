@@ -2,7 +2,7 @@ import React, { PureComponent, Fragment } from 'react'
 import { Row, Col, Container, Navbar, Nav, NavItem } from 'reactstrap'
 import { Link, withRouter } from 'react-router-dom'
 
-import CommonRouter from 'common/router/Router'
+import Routes from 'common/routes'
 
 class RootPage extends PureComponent {
   render() {
@@ -21,7 +21,7 @@ class RootPage extends PureComponent {
         <Container>
           <Row>
             <Col sm="12">
-              <CommonRouter />
+              <Routes />
             </Col>
           </Row>
         </Container>
