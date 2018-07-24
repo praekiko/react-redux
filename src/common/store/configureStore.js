@@ -6,17 +6,21 @@ import { createLogger } from 'redux-logger'
 
 import { rootReducer } from './rootReducer'
 
-export function configureStore() {
-  const loggerMiddleware = createLogger()
+const loggerMiddleware = createLogger()
+const reduxImmutableStateInvariantMiddleware = reduxImmutableStateInvariant()
 
-  return createStore(
-    rootReducer,
-    composeWithDevTools(
-      applyMiddleware(
+const middleware =
+  process.env.NODE_ENV === 'production'
+    ? [thunkMiddleware]
+    : [
         thunkMiddleware,
         loggerMiddleware,
-        reduxImmutableStateInvariant()
-      )
-    )
+        reduxImmutableStateInvariantMiddleware
+      ]
+
+export function configureStore() {
+  return createStore(
+    rootReducer,
+    composeWithDevTools(applyMiddleware(...middleware))
   )
 }

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import { Row, Col, Container, Navbar, Nav, NavItem } from 'reactstrap'
 import { Link, withRouter } from 'react-router-dom'
 
@@ -7,7 +7,7 @@ import CommonRouter from 'common/router/Router'
 class RootPage extends PureComponent {
   render() {
     return (
-      <Container>
+      <Fragment>
         <Navbar color="light" light expand="md">
           <Nav navbar>
             <NavItem>
@@ -18,12 +18,14 @@ class RootPage extends PureComponent {
             </NavItem>
           </Nav>
         </Navbar>
-        <Row>
-          <Col sm="12">
-            <CommonRouter />
-          </Col>
-        </Row>
-      </Container>
+        <Container>
+          <Row>
+            <Col sm="12">
+              <CommonRouter />
+            </Col>
+          </Row>
+        </Container>
+      </Fragment>
     )
   }
 }

@@ -3,7 +3,8 @@ import { Jumbotron, Container, Button } from 'reactstrap'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import PostAction from 'modules/post/actions'
+import PostActions from 'modules/post/actions'
+import PostSelectors from 'modules/post/selectors'
 
 class PostsPage extends PureComponent {
   componentDidMount() {
@@ -11,15 +12,15 @@ class PostsPage extends PureComponent {
   }
 
   render() {
-    const { posts } = this.props
+    const { posts, isFetching } = this.props
 
     return (
       <Jumbotron fluid>
         <Container fluid>
-          {posts.isFetching ? (
+          {isFetching ? (
             <p>Loading...</p>
           ) : (
-            posts.data.map(post => (
+            posts.map(post => (
               <div key={post.id}>
                 <Link to={`/posts/${post.id}`}>
                   <Button color="secondary">{post.title}</Button>
@@ -33,10 +34,13 @@ class PostsPage extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ posts }) => ({ posts })
+const mapStateToProps = state => ({
+  posts: PostSelectors.getPosts(state),
+  isFetching: PostSelectors.getPostsIsFetching(state)
+})
 
 const mapDispatchToProps = {
-  fetchPosts: PostAction.fetchPosts
+  fetchPosts: PostActions.fetchPosts
 }
 
 export default connect(

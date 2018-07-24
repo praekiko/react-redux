@@ -2,7 +2,8 @@ import React, { PureComponent } from 'react'
 import { Jumbotron, Container } from 'reactstrap'
 import { connect } from 'react-redux'
 
-import PostAction from 'modules/post/actions'
+import PostActions from 'modules/post/actions'
+import PostSelectors from 'modules/post/selectors'
 
 class PostPage extends PureComponent {
   componentDidMount() {
@@ -16,26 +17,25 @@ class PostPage extends PureComponent {
   }
 
   render() {
-    const { post } = this.props
+    const { post, isFetching } = this.props
 
     return (
       <Jumbotron fluid>
         <Container fluid>
-          {post.isFetching ? (
-            <p>Loading...</p>
-          ) : (
-            <h1 key={post.data.id}>{post.data.title}</h1>
-          )}
+          {isFetching ? <p>Loading...</p> : <h1 key={post.id}>{post.title}</h1>}
         </Container>
       </Jumbotron>
     )
   }
 }
 
-const mapStateToProps = ({ post }) => ({ post })
+const mapStateToProps = state => ({
+  post: PostSelectors.getPost(state),
+  isFetching: PostSelectors.getPostIsFetching(state)
+})
 
 const mapDispatchToProps = {
-  fetchPost: PostAction.fetchPost
+  fetchPost: PostActions.fetchPost
 }
 
 export default connect(
